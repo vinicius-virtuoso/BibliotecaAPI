@@ -8,6 +8,8 @@ import {
   createUserSchema,
   updateUserSchema,
   returnUserSchema,
+  loginSchema,
+  returnLoginSchema,
 } from './user/user.schema'
 
 import { createLoanSchema, returnLoanSchema } from './loan/loan.schema'
@@ -25,4 +27,6 @@ export {
   returnUserSchema,
   returnLoanSchema,
   returnCopySchema,
+  loginSchema,
+  returnLoginSchema,
 }
