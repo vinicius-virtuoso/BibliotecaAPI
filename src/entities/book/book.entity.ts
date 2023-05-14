@@ -25,7 +25,7 @@ export class Book {
   pages: number
 
   @Column({ type: 'enum', enum: BookLanguage, default: BookLanguage.en_US })
-  language: BookLanguage
+  language: BookLanguage | string
 
   @Column({ type: 'date' })
   date_release: string
