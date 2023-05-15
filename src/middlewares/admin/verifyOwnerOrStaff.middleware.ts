@@ -1,16 +1,16 @@
 import { NextFunction, Request, Response } from 'express'
 import { AppError } from '../../errors'
 
-export const verifyUpdateIsAdmin = async (
+export const verifyOwnerOrStaff = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  const { id } = req.params
+  const { user_id } = req.params
   const { is_staff, id: token_id } = req.auth
 
-  if (id !== token_id) {
-    if (is_staff) {
+  if (user_id !== token_id) {
+    if (!is_staff) {
       throw new AppError('Insufficient permission', 403)
     }
   }

@@ -19,9 +19,9 @@ export class Copy {
   @CreateDateColumn()
   created_at: string
 
-  @ManyToOne(() => Book)
+  @ManyToOne(() => Book, (book: Book) => book.copy, { onDelete: 'CASCADE' })
   book: Book
 
-  @OneToMany(() => Loan, (loan: Loan) => loan.copy)
+  @OneToMany(() => Loan, (loan: Loan) => loan.copy, { onDelete: 'CASCADE' })
   lonas: []
 }

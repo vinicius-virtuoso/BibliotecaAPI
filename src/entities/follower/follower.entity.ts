@@ -14,9 +14,9 @@ export class Follower {
   @CreateDateColumn()
   created_at: string
 
-  @ManyToOne(() => User, (user: User) => user)
+  @ManyToOne(() => User, (user: User) => user, { onDelete: 'CASCADE' })
   user: User
 
-  @ManyToOne(() => Book, (book: Book) => book)
+  @ManyToOne(() => Book, (book: Book) => book, { onDelete: 'CASCADE' })
   book: Book
 }

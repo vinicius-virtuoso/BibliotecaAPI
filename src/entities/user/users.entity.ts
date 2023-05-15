@@ -3,11 +3,9 @@ import {
   BeforeUpdate,
   Column,
   Entity,
-  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm'
 import { hashSync, getRounds } from 'bcryptjs'
-import { Follower, Loan } from '..'
 
 @Entity('users')
 export class User {

@@ -24,9 +24,9 @@ export class Loan {
     this.devolution_at = this.date_loan_at
   }
 
-  @ManyToOne(() => User, (user: User) => user)
+  @ManyToOne(() => User, (user: User) => user, { onDelete: 'CASCADE' })
   user: User
 
-  @ManyToOne(() => Copy, (copy: Copy) => copy)
+  @ManyToOne(() => Copy, (copy: Copy) => copy, { onDelete: 'CASCADE' })
   copy: Copy
 }

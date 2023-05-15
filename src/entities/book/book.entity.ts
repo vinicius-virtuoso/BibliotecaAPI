@@ -1,5 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
-import { Copy } from '..'
+import { Copy, Follower } from '..'
 
 export enum BookLanguage {
   en_US = 'en-US',
@@ -30,6 +30,11 @@ export class Book {
   @Column({ type: 'date' })
   date_release: string
 
-  @OneToMany(() => Copy, (copy: Copy) => copy.book)
+  @OneToMany(() => Copy, (copy: Copy) => copy.book, { cascade: true })
   copy: Copy[]
+
+  @OneToMany(() => Follower, (follower: Follower) => follower.user, {
+    onDelete: 'CASCADE',
+  })
+  followers: []
 }
