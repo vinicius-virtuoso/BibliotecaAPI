@@ -11,7 +11,7 @@ export const verifyOwnerOrStaff = async (
 
   if (user_id !== token_id) {
     if (!is_staff) {
-      throw new AppError('Insufficient permission', 403)
+      throw new AppError('Insufficient permission.', 403)
     }
   }
 

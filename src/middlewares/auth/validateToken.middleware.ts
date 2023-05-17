@@ -12,7 +12,7 @@ export const validateToken = async (
   const token = authToken?.split(' ')[1]
 
   if (!token) {
-    throw new AppError('Missing bearer token', 401)
+    throw new AppError('Missing bearer token.', 401)
   }
 
   jwt.verify(token, String(process.env.SECRET_KEY), (err, decoded: any) => {

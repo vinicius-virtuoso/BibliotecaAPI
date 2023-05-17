@@ -1,13 +1,8 @@
 import { Router } from 'express'
-import { validateToken, verifyOwnerOrStaff } from '../middlewares'
+import { validateToken } from '../middlewares'
+import { loanController } from '../controllers/loan/loan.controller'
 
 export const loanRouter = Router()
 
-loanRouter.get(
-  '/:user_id',
-  validateToken,
-  verifyOwnerOrStaff,
-  loanController.list
-)
-
-loanRouter.post('/:book_id', validateToken, loanController.create)
+loanRouter.get('/my-loans', validateToken, loanController.list)
+loanRouter.delete('/my-loans/:book_id', validateToken, loanController.delete)

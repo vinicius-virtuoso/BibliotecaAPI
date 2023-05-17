@@ -9,7 +9,7 @@ export const verifyIsStaff = async (
   const { is_staff } = req.auth
 
   if (!is_staff) {
-    throw new AppError('Insufficient permission', 403)
+    throw new AppError('Insufficient permission.', 403)
   }
 
   return next()

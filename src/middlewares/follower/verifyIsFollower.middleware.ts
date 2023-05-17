@@ -17,7 +17,7 @@ export const verifyIsFollower = async (
   })
 
   if (followerFind) {
-    throw new AppError('You are already following this book', 409)
+    throw new AppError('You are already following this book.', 409)
   }
 
   return next()

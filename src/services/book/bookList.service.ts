@@ -1,5 +1,6 @@
 import { AppDataSource } from '../../data-source'
 import { Book, Follower, User } from '../../entities'
+import { returnBookListSchema } from '../../schemas/book/book.schema'
 
 export const bookListService = async () => {
   const booksRepo = AppDataSource.getRepository(Book)
@@ -27,7 +28,7 @@ export const bookListService = async () => {
           const [id, quantity, created_at] = copyString.split(':')
           return {
             copy_id: id,
-            copy_quantity: quantity,
+            copy_quantity: Number(quantity),
             copy_created_at: created_at,
           }
         })[0]
@@ -40,11 +41,6 @@ export const bookListService = async () => {
       : []
 
     const followersCount = followers.length
-    delete book.users
-    delete book.copy_id
-    delete book.copy_created_at
-    delete book.copy_quantity
-    delete book.copy_bookId
 
     return {
       ...book,
@@ -54,5 +50,5 @@ export const bookListService = async () => {
     }
   })
 
-  return booksFormattedList
+  return returnBookListSchema.parse(booksFormattedList)
 }

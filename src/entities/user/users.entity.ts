@@ -31,7 +31,7 @@ export class User {
   is_blocked_loans: boolean
 
   @Column({ nullable: true, default: null, type: 'date' })
-  date_unlock: string | null
+  date_unlock: string | Date | null
 
   @BeforeInsert()
   @BeforeUpdate()

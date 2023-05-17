@@ -4,6 +4,7 @@ import { bookCreateService } from '../../services/book/createBook.service'
 import { bookDetailService } from '../../services/book/bookDetail.service'
 import { createFollowerOfBook } from '../../services/follower/createFollower.service'
 import { bookDeleteService } from '../../services/book/deleteBook.service'
+import { createLoanService } from '../../services/loan/createLoan.service'
 
 export class BookController {
   async list(req: Request, res: Response) {
@@ -26,10 +27,10 @@ export class BookController {
   }
 
   async follower(req: Request, res: Response) {
-    const { id } = req.auth
+    const { id: user_id } = req.auth
     const { book_id } = req.params
 
-    await createFollowerOfBook(id, book_id)
+    await createFollowerOfBook(user_id, book_id)
 
     return res.status(200).json()
   }
@@ -40,6 +41,15 @@ export class BookController {
     await bookDeleteService(book_id)
 
     return res.status(204).json()
+  }
+
+  async loan(req: Request, res: Response) {
+    const { id: user_id } = req.auth
+    const { book_id } = req.params
+
+    const loan = await createLoanService(user_id, book_id)
+
+    return res.status(201).json(loan)
   }
 }
 

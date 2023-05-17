@@ -6,6 +6,8 @@ import {
   verifyExistBook,
   verifyNotExistBook,
   verifyIsFollower,
+  verifyIsBlockedLoan,
+  verifyExistLoan,
 } from '../middlewares'
 import { bookController } from '../controllers/book/book.controller'
 import { createBookSchema } from '../schemas'
@@ -38,4 +40,13 @@ bookRouter.delete(
   verifyIsStaff,
   verifyNotExistBook,
   bookController.delete
+)
+
+bookRouter.post(
+  '/:book_id/loan',
+  validateToken,
+  verifyNotExistBook,
+  verifyIsBlockedLoan,
+  verifyExistLoan,
+  bookController.loan
 )

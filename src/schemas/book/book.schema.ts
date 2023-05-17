@@ -39,3 +39,49 @@ export const returnBookSchema = z.object({
   quantity_copy: z.number(),
   followers: z.number(),
 })
+
+export const returnBookOneSchema = z.object({
+  book_id: z.string(),
+  book_title: z.string(),
+  book_synopsis: z.string(),
+  book_author: z.string(),
+  book_pages: z.number(),
+  book_language: z.string(),
+  book_date_release: z.string().or(z.date()),
+  copy: z.object({
+    copy_id: z.string(),
+    copy_quantity: z.number(),
+    copy_created_at: z.string().or(z.date()),
+  }),
+  count_followers: z.number(),
+  followers: z.array(
+    z.object({
+      follower_id: z.string(),
+      follower_username: z.string(),
+    })
+  ),
+})
+
+export const returnBookListSchema = z.array(
+  z.object({
+    book_id: z.string(),
+    book_title: z.string(),
+    book_synopsis: z.string(),
+    book_author: z.string(),
+    book_pages: z.number(),
+    book_language: z.string(),
+    book_date_release: z.string().or(z.date()),
+    copy: z.object({
+      copy_id: z.string(),
+      copy_quantity: z.number(),
+      copy_created_at: z.string().or(z.date()),
+    }),
+    count_followers: z.number(),
+    followers: z.array(
+      z.object({
+        follower_id: z.string(),
+        follower_username: z.string(),
+      })
+    ),
+  })
+)

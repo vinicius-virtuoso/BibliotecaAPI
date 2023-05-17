@@ -16,7 +16,7 @@ export const verifyUserNotExistsId = async (
   })
 
   if (!findUser) {
-    throw new AppError('User not found', 404)
+    throw new AppError('User not found.', 404)
   }
 
   return next()

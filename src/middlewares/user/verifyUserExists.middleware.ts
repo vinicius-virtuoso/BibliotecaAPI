@@ -16,7 +16,7 @@ export const verifyUserExists = async (
   })
 
   if (findUser) {
-    throw new AppError('Email/Username already exists', 409)
+    throw new AppError('Email/Username already exists.', 409)
   }
 
   return next()
