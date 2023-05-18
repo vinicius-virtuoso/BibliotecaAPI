@@ -1,3 +1,4 @@
+import { availabilityBook } from './../../utils/book/availabilityBook.utils'
 import { z } from 'zod'
 
 const LanguageEnum = z
@@ -26,6 +27,7 @@ export const returnBookOneSchema = z.object({
   book_pages: z.number(),
   book_language: z.string(),
   book_date_release: z.string().or(z.date()),
+  book_availability: z.boolean(),
   copy: z.object({
     copy_id: z.string(),
     copy_quantity: z.number(),
@@ -49,6 +51,7 @@ export const returnBookListSchema = z.array(
     book_pages: z.number(),
     book_language: z.string(),
     book_date_release: z.string().or(z.date()),
+    book_availability: z.boolean(),
     copy: z.object({
       copy_id: z.string(),
       copy_quantity: z.number(),
