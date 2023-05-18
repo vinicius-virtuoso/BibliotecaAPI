@@ -8,7 +8,7 @@ AppDataSource.initialize().then(() => {
   const PORT = Number(process.env.PORT) || 3000
 
   app.listen(PORT, () => {
-    cron.schedule('32 21 * * *', async () => {
+    cron.schedule('0 0 * * *', async () => {
       // Executar a cada 24 horas as 00:00:00h
       Promise.all([unlockUser(), blockedUserLoan(), availabilityBook()])
     })
