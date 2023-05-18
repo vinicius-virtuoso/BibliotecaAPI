@@ -1,3 +1,4 @@
+import { IEmailRequest } from './email/email.interfaces'
 import {
   iCreateUser,
   iUpdateUser,
@@ -5,4 +6,15 @@ import {
   iUserRepo,
 } from './user/user.interfaces'
 
-export { iCreateUser, iUpdateUser, iUserLogin, iUserRepo }
+import { iBookRepo, iBookCreate, iBookUpdate } from './book/book.interfaces'
+
+export {
+  iCreateUser,
+  iUpdateUser,
+  iUserLogin,
+  iUserRepo,
+  IEmailRequest,
+  iBookRepo,
+  iBookCreate,
+  iBookUpdate,
+}

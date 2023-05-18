@@ -10,11 +10,13 @@ export const verifyExistBook = async (
 ) => {
   const { title } = req.body
 
-  const bookRepo = AppDataSource.getRepository(Book)
-  const findBook = await bookRepo.exist({ where: { title: title } })
+  if (title) {
+    const bookRepo = AppDataSource.getRepository(Book)
+    const findBook = await bookRepo.exist({ where: { title: title } })
 
-  if (findBook) {
-    throw new AppError('Book already exists.', 409)
+    if (findBook) {
+      throw new AppError('Book already exists.', 409)
+    }
   }
 
   return next()

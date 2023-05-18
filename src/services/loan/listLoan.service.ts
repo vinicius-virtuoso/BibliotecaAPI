@@ -2,7 +2,7 @@ import { AppDataSource } from '../../data-source'
 import { Loan } from '../../entities'
 import { returnLoanListSchema } from '../../schemas/loan/loan.schema'
 
-export const loanListService = async (user_id: string) => {
+export const listLoanService = async (user_id: string) => {
   const loanRepo = AppDataSource.getRepository(Loan)
   const findLoans = await loanRepo.find({
     where: {

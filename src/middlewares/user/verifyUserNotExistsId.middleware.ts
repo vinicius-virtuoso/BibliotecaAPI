@@ -8,11 +8,11 @@ export const verifyUserNotExistsId = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { id } = req.params
+  const { user_id } = req.params
 
   const userRepo = AppDataSource.getRepository(User)
   const findUser = await userRepo.exist({
-    where: { id: id },
+    where: { id: user_id },
   })
 
   if (!findUser) {

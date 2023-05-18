@@ -5,7 +5,6 @@ import { sign } from 'jsonwebtoken'
 import { iUserLogin } from '../../interfaces'
 import { User } from '../../entities'
 import { returnLoginSchema } from '../../schemas'
-import { validateLoansDate } from '../../utils'
 
 export const loginService = async (payload: iUserLogin) => {
   const { username_or_email, password } = payload
@@ -24,8 +23,6 @@ export const loginService = async (payload: iUserLogin) => {
   if (!comparePassword) {
     throw new AppError('Invalid credentials', 401)
   }
-
-  await validateLoansDate(userFind.id)
 
   const accessToken: string = sign(
     { username_or_email: username_or_email, is_staff: userFind.is_staff },

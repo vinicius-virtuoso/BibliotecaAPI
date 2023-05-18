@@ -2,7 +2,7 @@ import { AppDataSource } from '../../data-source'
 import { Book, Follower, User } from '../../entities'
 import { returnBookListSchema } from '../../schemas/book/book.schema'
 
-export const bookListService = async () => {
+export const listBookService = async () => {
   const booksRepo = AppDataSource.getRepository(Book)
   const books = booksRepo.createQueryBuilder('book')
 

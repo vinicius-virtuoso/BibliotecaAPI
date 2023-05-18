@@ -16,13 +16,15 @@ export const verifyIsBlockedLoan = async (
   if (userFind && userFind.date_unlock) {
     const date = new Date(userFind.date_unlock).toISOString().slice(0, 10)
     throw new AppError(
-      `You are blocked from ordering books, if you have already returned them but passed the return date, you must wait until ${date} to apply for new loans.`
+      `You are blocked from ordering books, if you have already returned them but passed the return date, you must wait until ${date} to apply for new loans.`,
+      401
     )
   }
 
   if (userFind && userFind.is_blocked_loans) {
     throw new AppError(
-      `You are blocked from ordering new books. You need to return the books that you have.`
+      `You are blocked from ordering new books. You need to return the books that you have.`,
+      401
     )
   }
 

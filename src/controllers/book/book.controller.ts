@@ -1,20 +1,24 @@
 import { Request, Response } from 'express'
-import { bookListService } from '../../services/book/bookList.service'
-import { bookCreateService } from '../../services/book/createBook.service'
-import { bookDetailService } from '../../services/book/bookDetail.service'
+import { listBookService } from '../../services/book/listBook.service'
+import { createBookService } from '../../services/book/createBook.service'
+import { retrieveBookService } from '../../services/book/retrieveBook.service'
 import { createFollowerOfBook } from '../../services/follower/createFollower.service'
-import { bookDeleteService } from '../../services/book/deleteBook.service'
+import { deleteBookService } from '../../services/book/deleteBook.service'
 import { createLoanService } from '../../services/loan/createLoan.service'
+import { iBookCreate, iBookUpdate } from '../../interfaces'
+import { updateBookService } from '../../services/book/updateBook.service'
 
 export class BookController {
   async list(req: Request, res: Response) {
-    const books = await bookListService()
+    const books = await listBookService()
 
     return res.status(200).json(books)
   }
 
   async create(req: Request, res: Response) {
-    const book = await bookCreateService(req.body)
+    const body: iBookCreate = req.body
+
+    const book = await createBookService(body)
 
     return res.status(201).json(book)
   }
@@ -22,7 +26,7 @@ export class BookController {
   async getBook(req: Request, res: Response) {
     const { book_id } = req.params
 
-    const book = await bookDetailService(book_id)
+    const book = await retrieveBookService(book_id)
     return res.status(200).json(book)
   }
 
@@ -38,7 +42,7 @@ export class BookController {
   async delete(req: Request, res: Response) {
     const { book_id } = req.params
 
-    await bookDeleteService(book_id)
+    await deleteBookService(book_id)
 
     return res.status(204).json()
   }
@@ -50,6 +54,15 @@ export class BookController {
     const loan = await createLoanService(user_id, book_id)
 
     return res.status(201).json(loan)
+  }
+
+  async update(req: Request, res: Response) {
+    const { book_id } = req.params
+    const payload: iBookUpdate = req.body
+
+    const book = await updateBookService(payload, book_id)
+
+    return res.status(200).json(book)
   }
 }
 

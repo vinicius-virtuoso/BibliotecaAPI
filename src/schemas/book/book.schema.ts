@@ -18,28 +18,6 @@ export const createBookSchema = z.object({
   quantity_copy: z.number().min(1),
 })
 
-export const updateBookSchema = z.object({
-  id: z.string().optional(),
-  title: z.string().optional(),
-  synopsis: z.string().optional(),
-  author: z.string().optional(),
-  pages: z.number().optional(),
-  language: LanguageEnum,
-  date_release: z.string().optional(),
-})
-
-export const returnBookSchema = z.object({
-  id: z.string(),
-  title: z.string(),
-  synopsis: z.string(),
-  author: z.string(),
-  pages: z.number(),
-  language: z.string(),
-  date_release: z.string(),
-  quantity_copy: z.number(),
-  followers: z.number(),
-})
-
 export const returnBookOneSchema = z.object({
   book_id: z.string(),
   book_title: z.string(),

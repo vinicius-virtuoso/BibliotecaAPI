@@ -50,3 +50,12 @@ bookRouter.post(
   verifyExistLoan,
   bookController.loan
 )
+
+bookRouter.patch(
+  '/:book_id',
+  validateToken,
+  verifyIsStaff,
+  verifyNotExistBook,
+  verifyExistBook,
+  bookController.update
+)

@@ -10,13 +10,15 @@ export const verifyUserExists = async (
 ) => {
   const { email, username } = req.body
 
-  const userRepo = AppDataSource.getRepository(User)
-  const findUser = await userRepo.exist({
-    where: [{ email: email }, { username }],
-  })
+  if (email || username) {
+    const userRepo = AppDataSource.getRepository(User)
+    const findUser = await userRepo.exist({
+      where: [{ email: email }, { username }],
+    })
 
-  if (findUser) {
-    throw new AppError('Email/Username already exists.', 409)
+    if (findUser) {
+      throw new AppError('Email/Username already exists.', 409)
+    }
   }
 
   return next()

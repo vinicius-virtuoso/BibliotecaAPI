@@ -30,6 +30,9 @@ export class Book {
   @Column({ type: 'date' })
   date_release: string
 
+  @Column({ default: true })
+  availability: boolean
+
   @OneToMany(() => Copy, (copy: Copy) => copy.book, { cascade: true })
   copy: Copy[]
 

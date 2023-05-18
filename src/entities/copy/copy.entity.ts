@@ -23,5 +23,5 @@ export class Copy {
   book: Book
 
   @OneToMany(() => Loan, (loan: Loan) => loan.copy, { onDelete: 'CASCADE' })
-  lonas: []
+  loans: []
 }
