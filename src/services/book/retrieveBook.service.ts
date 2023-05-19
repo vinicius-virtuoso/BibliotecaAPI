@@ -1,6 +1,6 @@
 import { AppDataSource } from '../../data-source'
 import { Book, Follower, User } from '../../entities'
-import { returnBookOneSchema } from '../../schemas/book/book.schema'
+import { returnBookOneSchema } from '../../schemas'
 
 export const retrieveBookService = async (book_id: string) => {
   const booksRepo = AppDataSource.getRepository(Book)

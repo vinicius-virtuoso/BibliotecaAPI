@@ -3,7 +3,7 @@ import 'dotenv/config'
 import { createTransport } from 'nodemailer'
 import { IEmailRequest } from '../../interfaces'
 
-export const sendEmailBook = async ({ to, name, book }: IEmailRequest) => {
+export const sendEmailBook = async ({ to, username, book }: IEmailRequest) => {
   const transporter = createTransport({
     host: 'smtp-mail.outlook.com',
     port: 587,
@@ -27,7 +27,7 @@ export const sendEmailBook = async ({ to, name, book }: IEmailRequest) => {
         color: #037547;
       }
     </style>
-        <h1>Hello ${name}, the book ${book} is available!</h1>
+        <h1>Hello ${username}, the book ${book} is available!</h1>
         <p>This email is to let you know that the book ${book} is <span>available</span> for you to borrow!</p>
         <p>So <strong>RUN</strong> and take the opportunity to order the book you are interested in before it becomes unavailable!</p>
       </html>

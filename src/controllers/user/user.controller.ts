@@ -12,14 +12,6 @@ class UserController {
     return res.status(200).json(users)
   }
 
-  async create(req: Request, res: Response) {
-    const body: iCreateUser = req.body
-
-    const user = await createUserService(body)
-
-    return res.status(201).json(user)
-  }
-
   async update(req: Request, res: Response) {
     const { user_id } = req.params
     const payload: iUpdateUser = req.body

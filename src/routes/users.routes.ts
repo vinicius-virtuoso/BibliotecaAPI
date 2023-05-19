@@ -15,12 +15,6 @@ export const userRouter = Router()
 
 userRouter.get('/', validateToken, verifyIsStaff, userController.list)
 
-userRouter.post(
-  '/register',
-  validateBody(createUserSchema),
-  verifyUserExists,
-  userController.create
-)
 userRouter.patch(
   '/:user_id',
   validateBody(updateUserSchema),

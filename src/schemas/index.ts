@@ -1,4 +1,8 @@
-import { createBookSchema } from './book/book.schema'
+import {
+  createBookSchema,
+  returnBookListSchema,
+  returnBookOneSchema,
+} from './book/book.schema'
 
 import { createUserSchema, returnUserSchema } from './user/user.schema'
 
@@ -18,4 +22,6 @@ export {
   returnCopySchema,
   loginSchema,
   returnLoginSchema,
+  returnBookListSchema,
+  returnBookOneSchema,
 }

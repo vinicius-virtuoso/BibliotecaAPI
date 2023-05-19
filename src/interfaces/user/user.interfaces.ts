@@ -5,7 +5,9 @@ import { User } from '../../entities'
 
 type iCreateUser = z.infer<typeof createUserSchema>
 type iUserLogin = z.infer<typeof loginSchema>
-type iUpdateUser = DeepPartial<User>
+type iUpdateUser = DeepPartial<
+  Omit<User, 'id' | 'is_staff' | 'is_blocked_loans' | 'date_unlock'>
+>
 type iUserRepo = Repository<User>
 
 export { iCreateUser, iUpdateUser, iUserRepo, iUserLogin }

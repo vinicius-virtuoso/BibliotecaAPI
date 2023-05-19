@@ -1,6 +1,6 @@
 import { AppDataSource } from '../../data-source'
 import { Book, Copy } from '../../entities'
-import { iBookCreate } from '../../interfaces/book/book.interfaces'
+import { iBookCreate } from '../../interfaces'
 
 export const createBookService = async (payload: iBookCreate) => {
   const bookRepo = AppDataSource.getRepository(Book)

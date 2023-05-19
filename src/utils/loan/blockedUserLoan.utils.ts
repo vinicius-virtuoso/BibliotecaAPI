@@ -28,7 +28,7 @@ export const blockedUserLoan = async () => {
       await userRepo.save(userToBlock)
 
       if (userFind) {
-        const user = { name: userFind?.name, to: userFind?.email }
+        const user = { username: userFind?.username, to: userFind?.email }
         await sendEmailLoan(user)
       }
     })

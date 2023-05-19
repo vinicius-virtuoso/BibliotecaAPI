@@ -1,5 +1,5 @@
 export interface IEmailRequest {
   to: string
-  name: string
+  username: string
   book?: string
 }

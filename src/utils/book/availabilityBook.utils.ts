@@ -50,7 +50,7 @@ export const availabilityBook = async () => {
           ) {
             await sendEmailBook({
               to: user.email,
-              name: user.name,
+              username: user.username,
               book: book.book_title,
             })
           }
