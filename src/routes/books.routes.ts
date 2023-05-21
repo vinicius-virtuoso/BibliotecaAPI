@@ -10,7 +10,7 @@ import {
   verifyExistLoan,
 } from '../middlewares'
 import { bookController } from '../controllers/book/book.controller'
-import { createBookSchema } from '../schemas'
+import { createBookSchema, updateBookSchema } from '../schemas'
 
 export const bookRouter = Router()
 
@@ -34,14 +34,6 @@ bookRouter.post(
   bookController.follower
 )
 
-bookRouter.delete(
-  '/:book_id',
-  validateToken,
-  verifyIsStaff,
-  verifyNotExistBook,
-  bookController.delete
-)
-
 bookRouter.post(
   '/:book_id/loan',
   validateToken,
@@ -53,9 +45,18 @@ bookRouter.post(
 
 bookRouter.patch(
   '/:book_id',
+  validateBody(updateBookSchema),
   validateToken,
   verifyIsStaff,
   verifyNotExistBook,
   verifyExistBook,
   bookController.update
+)
+
+bookRouter.delete(
+  '/:book_id',
+  validateToken,
+  verifyIsStaff,
+  verifyNotExistBook,
+  bookController.delete
 )

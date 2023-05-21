@@ -1,0 +1,1051 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "GESTÃO DE BIBLIOTECA",
+    "description": "Aplicativo de gerenciamento de empréstimo de livros em uma biblioteca.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/register": {
+      "post": {
+        "summary": "Criação de Usuário",
+        "description": "Cria um usuário e retorna parte de suas informações. a propriedade 'is_staff' indica se é um funcionário ou não",
+        "tags": ["Register/Login"],
+        "operationId": "registerUser",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterPayload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Usuário criado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Falta de informações ou compo(s) invalido(s)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseFields"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Email ou Username já está cadastrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "summary": "Rota de Autenticação",
+        "description": "Autenticação do usuários e gera accessToken",
+        "tags": ["Register/Login"],
+        "operationId": "loginUser",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginPayload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Usuário autenticado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Falta de informações ou compo(s) invalido(s)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseFields"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Credenciais invalidas",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "summary": "Rota de listagem de usuários",
+        "description": "Apenas funcionários podem acessa esta rota",
+        "tags": ["Users"],
+        "operationId": "listUsers",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "Listagem de usuários com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Usuário não está autenticado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Usuário não tem permissão para está ação",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{user_id}": {
+      "get": {
+        "summary": "Detalhes do usuário",
+        "description": "Apenas funcionários e o dono da conta podem acessa esta rota",
+        "tags": ["Users"],
+        "operationId": "retrieveUser",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "ID do usuário",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operação realizada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Usuário não está autenticado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Usuário não tem permissão para está ação",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Usuário não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Atualização de usuário",
+        "description": "Apenas funcionários e o dono da conta podem acessa esta rota",
+        "tags": ["Users"],
+        "operationId": "updateUser",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "ID do usuário",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserPayload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Usuário atualizado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/User" }
+              }
+            }
+          },
+          "401": {
+            "description": "Usuário não está autenticado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Usuário não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Usuário não tem permissão para está ação",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deleção de usuário",
+        "description": "Apenas funcionários e o dono da conta podem acessa esta rota",
+        "tags": ["Users"],
+        "operationId": "deleteUser",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "ID do usuário",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Usuário deletado com sucesso"
+          },
+          "401": {
+            "description": "Usuário não está autenticado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Usuário não tem permissão para está ação",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Usuário não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/books": {
+      "post": {
+        "summary": "Criação de Livro",
+        "description": "Apenas funcionários podem acessa esta rota",
+        "tags": ["Books"],
+        "operationId": "createBook",
+        "security": { "bearerAuth": [] },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BookCreatePayload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Livro criado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Book" }
+              }
+            }
+          },
+          "400": {
+            "description": "Falta de informações ou compo(s) invalido(s)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseFields"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Usuário não está autenticado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Usuário não tem permissão para está ação",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Rota de listagem de Livros",
+        "description": "Não precisa de autenticação",
+        "tags": ["Books"],
+        "operationId": "listBook",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BookAndRelations"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/books/{book_id}": {
+      "get": {
+        "summary": "Detalhes do livro",
+        "description": "Não precisa de autenticação",
+        "tags": ["Books"],
+        "operationId": "retrieveBook",
+        "parameters": [
+          {
+            "name": "book_id",
+            "in": "path",
+            "description": "ID do livro",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operação realizada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookAndRelations"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Livro não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Atualização do Livro",
+        "description": "Apenas funcionários podem acessa esta rota, e apenas detalhes do livro e não das relações podem ser atualizadas",
+        "tags": ["Books"],
+        "operationId": "updateBook",
+        "parameters": [
+          {
+            "name": "book_id",
+            "in": "path",
+            "description": "ID do livro",
+            "required": true
+          }
+        ],
+        "security": { "bearerAuth": [] },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "titles": { "type": "string" },
+                  "synopsis": { "type": "string" },
+                  "author": { "type": "string" },
+                  "pages": { "type": "integer" },
+                  "language": { "enum": ["en-US", "pt-BR", "pt-PT"] },
+                  "date_release": { "type": "string", "default": "yyyy-mm-dd" },
+                  "availability": { "type": "boolean", "default": true }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Livro atualizado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "titles": { "type": "string" },
+                    "synopsis": { "type": "string" },
+                    "author": { "type": "string" },
+                    "pages": { "type": "integer" },
+                    "language": { "type": "string", "default": "en-US" },
+                    "date_release": {
+                      "type": "string",
+                      "default": "yyyy-mm-dd"
+                    },
+                    "availability": { "type": "boolean", "default": true }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Falta de informações ou compo(s) invalido(s)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponseFields"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Usuário não está autenticado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Usuário não tem permissão para está ação",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Livro não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Livro já está cadastrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Detalhes do livro",
+        "description": "Não precisa de autenticação",
+        "tags": ["Books"],
+        "operationId": "deleteBook",
+        "parameters": [
+          {
+            "name": "book_id",
+            "in": "path",
+            "description": "ID do livro",
+            "required": true
+          }
+        ],
+        "security": { "bearerAuth": [] },
+        "responses": {
+          "204": { "description": "Livro deletado com sucesso" },
+          "401": {
+            "description": "Usuário não está autenticado",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "403": {
+            "description": "Usuário não tem permissão para está ação",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "404": {
+            "description": "Livro não encontrado",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/books/{book_id}/loan": {
+      "post": {
+        "summary": "Criação de Empréstimo",
+        "description": "Autenticação do necessária, e o usuário não pode estar bloqueado",
+        "tags": ["Loans"],
+        "operationId": "createLoans",
+        "security": { "bearerAuth": [] },
+        "parameters": [
+          {
+            "name": "book_id",
+            "in": "path",
+            "description": "ID do livro",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Operação realizada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Loan"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Usuário não está autenticado ou está bloqueado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Livro não está disponível",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Usuário não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Empréstimo já realizado para este usuário",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/loans/my-loans": {
+      "get": {
+        "summary": "Empréstimos do usuário",
+        "description": "Apenas funcionários e o dono da conta podem acessa esta rota",
+        "tags": ["Loans"],
+        "operationId": "listLoans",
+        "security": { "bearerAuth": [] },
+        "responses": {
+          "200": {
+            "description": "Operação realizada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Loan" }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Usuário não está autenticado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/loans/my-loans/{loan_id}": {
+      "get": {
+        "summary": "Detalhes do empréstimo",
+        "description": "Apenas funcionários e o dono da conta podem acessa esta rota",
+        "operationId": "retrieveLoan",
+        "tags": ["Loans"],
+        "parameters": [
+          {
+            "name": "loan_id",
+            "in": "path",
+            "description": "ID do empréstimo",
+            "required": true
+          }
+        ],
+        "security": { "bearerAuth": [] },
+        "responses": {
+          "200": {
+            "description": "Operação realizada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Loan"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Usuário não está autenticado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Usuário não tem permissão para está ação",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Empréstimo não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Devolução do livro",
+        "description": "Apenas funcionários e o dono da conta podem acessa esta rota",
+        "operationId": "deleteLoan",
+        "tags": ["Loans"],
+        "parameters": [
+          { "name": "loan_id", "in": "path", "description": "ID do empréstimo" }
+        ],
+        "security": { "bearerAuth": [] },
+        "responses": {
+          "204": {
+            "description": "Operação realizada com sucesso"
+          },
+          "401": {
+            "description": "Usuário não está autenticado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Usuário não tem permissão para está ação",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Empréstimo não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/books/{book_id}/follower": {
+      "post": {
+        "summary": "Seguir um livro",
+        "description": "Autenticação do necessária, ao seguir um livro emails são enviados para notificação de disponibilidade do livro para usuários que estão seguindo o livro porém ainda não fizeram empréstimo dele",
+        "tags": ["Followers"],
+        "security": { "bearerAuth": [] },
+        "operationId": "createFollower",
+        "parameters": [
+          {
+            "name": "book_id",
+            "in": "path",
+            "description": "ID do livro",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": { "description": "Operação realizada com sucesso" },
+          "401": {
+            "description": "Usuário não está autenticado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Livro não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Usuário já segue o livro",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ErrorResponseFields": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "object",
+            "properties": {
+              "field": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "RegisterPayload": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "default": "user01"
+          },
+          "email": {
+            "type": "string",
+            "default": "user01@example.com"
+          },
+          "password": {
+            "type": "string",
+            "default": "1234"
+          },
+          "is_staff": {
+            "type": "boolean",
+            "default": false
+          }
+        },
+        "required": ["username", "email", "password"]
+      },
+      "LoginPayload": {
+        "type": "object",
+        "properties": {
+          "username_or_email": { "type": "string" },
+          "password": { "type": "string" }
+        },
+        "required": ["username_or_email", "password"]
+      },
+      "LoginResponse": {
+        "type": "object",
+        "properties": {
+          "accessToken": { "type": "string" }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "is_staff": {
+            "type": "boolean"
+          },
+          "is_blocked_loans": {
+            "type": "boolean",
+            "default": false
+          },
+          "date_unlock": {
+            "type": "string",
+            "default": null
+          }
+        }
+      },
+      "UpdateUserPayload": {
+        "type": "object",
+        "properties": {
+          "username": { "type": "string" },
+          "email": { "type": "string" },
+          "password": { "type": "string" }
+        }
+      },
+      "Book": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "title": { "type": "string" },
+          "synopsis": { "type": "string" },
+          "author": { "type": "string" },
+          "pages": { "type": "integer", "default": 1 },
+          "language": { "type": "string" },
+          "date_release": { "type": "string", "default": "2023-05-18" },
+          "availability": { "type": "boolean", "default": true },
+          "copy": {
+            "type": "object",
+            "properties": { "quantity": { "type": "integer", "default": 1 } }
+          }
+        }
+      },
+      "BookCreatePayload": {
+        "type": "object",
+        "properties": {
+          "title": { "type": "string" },
+          "synopsis": { "type": "string" },
+          "author": { "type": "string" },
+          "pages": { "type": "integer", "default": 20 },
+          "language": {
+            "enum": ["en-US", "pt-BR", "pt-PT"],
+            "default": "en-US"
+          },
+          "date_release": { "type": "string", "default": "2023-05-18" },
+          "quantity_copy": { "type": "integer", "default": 20 }
+        },
+        "required": [
+          "title",
+          "synopsis",
+          "author",
+          "pages",
+          "date_release",
+          "quantity_copy"
+        ]
+      },
+      "BookAndRelations": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "title": { "type": "string" },
+          "synopsis": { "type": "string" },
+          "author": { "type": "string" },
+          "pages": { "type": "integer", "default": 1 },
+          "language": { "type": "string" },
+          "date_release": { "type": "string", "default": "yyyy-mm-dd" },
+          "availability": { "type": "boolean", "default": true },
+          "copy": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "quantity": { "type": "integer" },
+              "created_at": { "type": "string" }
+            }
+          },
+          "count_followers": { "type": "integer" },
+          "followers": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": { "type": "string" },
+                "username": { "type": "string" }
+              }
+            }
+          }
+        }
+      },
+      "Loan": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "created_at": { "type": "string" },
+          "devolution_at": { "type": "string" },
+          "user": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "username": { "type": "string" }
+            }
+          },
+          "copy": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "quantity": { "type": "string" },
+              "book": {
+                "type": "object",
+                "properties": {
+                  "id": { "type": "string" },
+                  "title": { "type": "string" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "apiKey": "biblioteca_api_test",
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

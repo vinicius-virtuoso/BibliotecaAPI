@@ -2,6 +2,7 @@ import {
   createBookSchema,
   returnBookListSchema,
   returnBookOneSchema,
+  updateBookSchema,
 } from './book/book.schema'
 
 import { createUserSchema, returnUserSchema } from './user/user.schema'
@@ -24,4 +25,5 @@ export {
   returnLoginSchema,
   returnBookListSchema,
   returnBookOneSchema,
+  updateBookSchema,
 }

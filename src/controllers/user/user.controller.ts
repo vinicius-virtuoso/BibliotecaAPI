@@ -4,12 +4,21 @@ import { iCreateUser, iUpdateUser } from '../../interfaces'
 import { updateUserService } from '../../services/user/updateUser.service'
 import { listUserService } from '../../services/user/listUsers.service'
 import { deleteUserService } from '../../services/user/deleteUser.service'
+import { retrieveUserService } from '../../services/user/retrieveUser.service'
 
 class UserController {
   async list(req: Request, res: Response) {
     const users = await listUserService()
 
     return res.status(200).json(users)
+  }
+
+  async getOne(req: Request, res: Response) {
+    const { user_id } = req.params
+
+    const user = await retrieveUserService(user_id)
+
+    return res.status(200).json(user)
   }
 
   async update(req: Request, res: Response) {

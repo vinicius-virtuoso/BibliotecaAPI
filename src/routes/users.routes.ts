@@ -14,6 +14,13 @@ import { verifyUserNotExistsId } from '../middlewares/user/verifyUserNotExistsId
 export const userRouter = Router()
 
 userRouter.get('/', validateToken, verifyIsStaff, userController.list)
+userRouter.get(
+  '/:user_id',
+  validateToken,
+  verifyOwnerOrStaff,
+  verifyUserNotExistsId,
+  userController.getOne
+)
 
 userRouter.patch(
   '/:user_id',

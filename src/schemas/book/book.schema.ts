@@ -19,50 +19,37 @@ export const createBookSchema = z.object({
   quantity_copy: z.number().min(1),
 })
 
+export const updateBookSchema = z.object({
+  title: z.string().max(180).nonempty().optional(),
+  synopsis: z.string().nonempty().optional(),
+  author: z.string().max(50).nonempty().optional(),
+  pages: z.number().min(1).optional(),
+  language: LanguageEnum.optional(),
+  date_release: z.string().nonempty().optional(),
+  quantity_copy: z.number().min(1).optional(),
+})
+
 export const returnBookOneSchema = z.object({
-  book_id: z.string(),
-  book_title: z.string(),
-  book_synopsis: z.string(),
-  book_author: z.string(),
-  book_pages: z.number(),
-  book_language: z.string(),
-  book_date_release: z.string().or(z.date()),
-  book_availability: z.boolean(),
+  id: z.string(),
+  title: z.string(),
+  synopsis: z.string(),
+  author: z.string(),
+  pages: z.number(),
+  language: z.string(),
+  date_release: z.string().or(z.date()),
+  availability: z.boolean(),
   copy: z.object({
-    copy_id: z.string(),
-    copy_quantity: z.number(),
-    copy_created_at: z.string().or(z.date()),
+    id: z.string(),
+    quantity: z.number(),
+    created_at: z.string().or(z.date()),
   }),
   count_followers: z.number(),
   followers: z.array(
     z.object({
-      follower_id: z.string(),
-      follower_username: z.string(),
+      id: z.string(),
+      username: z.string(),
     })
   ),
 })
 
-export const returnBookListSchema = z.array(
-  z.object({
-    book_id: z.string(),
-    book_title: z.string(),
-    book_synopsis: z.string(),
-    book_author: z.string(),
-    book_pages: z.number(),
-    book_language: z.string(),
-    book_date_release: z.string().or(z.date()),
-    book_availability: z.boolean(),
-    copy: z.object({
-      copy_id: z.string(),
-      copy_quantity: z.number(),
-      copy_created_at: z.string().or(z.date()),
-    }),
-    count_followers: z.number(),
-    followers: z.array(
-      z.object({
-        follower_id: z.string(),
-        follower_username: z.string(),
-      })
-    ),
-  })
-)
+export const returnBookListSchema = z.array(returnBookOneSchema)

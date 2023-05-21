@@ -27,23 +27,30 @@ export const listBookService = async () => {
       ? book.copy.split(',').map((copyString: string) => {
           const [id, quantity, created_at] = copyString.split(':')
           return {
-            copy_id: id,
-            copy_quantity: Number(quantity),
-            copy_created_at: created_at,
+            id: id,
+            quantity: Number(quantity),
+            created_at: created_at,
           }
         })[0]
       : {}
     const followers = book.users
       ? book.users.split(',').map((userString: string) => {
           const [id, username] = userString.split(':')
-          return { follower_id: id, follower_username: username }
+          return { id: id, username: username }
         })
       : []
 
     const followersCount = followers.length
 
     return {
-      ...book,
+      id: book.book_id,
+      title: book.book_title,
+      synopsis: book.book_synopsis,
+      author: book.book_author,
+      pages: book.book_pages,
+      language: book.book_language,
+      date_release: book.book_date_release,
+      availability: book.book_availability,
       copy: { ...copy },
       count_followers: followersCount,
       followers: [...followers],
