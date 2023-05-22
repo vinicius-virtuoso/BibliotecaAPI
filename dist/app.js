@@ -1,0 +1,24 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.app = void 0;
+require("express-async-errors");
+const express_1 = __importDefault(require("express"));
+const errors_1 = require("./errors");
+const users_routes_1 = require("./routes/users.routes");
+const login_routes_1 = require("./routes/login.routes");
+const books_routes_1 = require("./routes/books.routes");
+const loans_routes_1 = require("./routes/loans.routes");
+const register_routes_1 = require("./routes/register.routes");
+const followers_routes_1 = require("./routes/followers.routes");
+exports.app = (0, express_1.default)();
+exports.app.use(express_1.default.json());
+exports.app.use('/login', login_routes_1.loginRouter);
+exports.app.use('/register', register_routes_1.registerRouter);
+exports.app.use('/users', users_routes_1.userRouter);
+exports.app.use('/books', books_routes_1.bookRouter);
+exports.app.use('/loans', loans_routes_1.loanRouter);
+exports.app.use('/followers', followers_routes_1.followerRouter);
+exports.app.use(errors_1.errorHandler);
