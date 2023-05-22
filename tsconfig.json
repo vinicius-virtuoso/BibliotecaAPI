@@ -12,7 +12,7 @@
     "emitDecoratorMetadata": true,
     "strictPropertyInitialization": false,
     "resolveJsonModule": true,
-    "outDir": "./dist"
+    "outDir": "./public"
   },
   "include": ["src", "app.ts", "swagger.d.ts"],
   "exclude": ["node_modules"]
