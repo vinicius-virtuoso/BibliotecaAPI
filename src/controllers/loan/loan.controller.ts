@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import { listLoanService } from '../../services/loan/listLoan.service'
 import { devolutionLoanService } from '../../services/loan/devolutionLoan.service'
+import { createLoanService } from '../../services/loan/createLoan.service'
 
 export class LoanController {
   async list(req: Request, res: Response) {
@@ -9,6 +10,14 @@ export class LoanController {
     const loans = await listLoanService(user_id)
 
     return res.status(200).json(loans)
+  }
+  async create(req: Request, res: Response) {
+    const { id: user_id } = req.auth
+    const { book_id } = req.params
+
+    const loan = await createLoanService(user_id, book_id)
+
+    return res.status(201).json(loan)
   }
 
   async devolution(req: Request, res: Response) {

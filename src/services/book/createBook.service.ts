@@ -1,6 +1,7 @@
 import { AppDataSource } from '../../data-source'
 import { Book, Copy } from '../../entities'
 import { iBookCreate } from '../../interfaces'
+import { createBookSchema } from '../../schemas'
 
 export const createBookService = async (payload: iBookCreate) => {
   const bookRepo = AppDataSource.getRepository(Book)
@@ -15,6 +16,16 @@ export const createBookService = async (payload: iBookCreate) => {
     })
     const copy = await copyRepo.save(copyCreate)
 
-    return { ...book, copy: { quantity: copy.quantity } }
+    return {
+      id: book.id,
+      title: book.title,
+      synopsis: book.synopsis,
+      author: book.author,
+      pages: book.pages,
+      language: book.language,
+      date_release: book.date_release,
+      availability: book.availability,
+      copy: { quantity: copy.quantity },
+    }
   }
 }

@@ -10,6 +10,7 @@ export const verifyExistBook = async (
 ) => {
   const { title } = req.body
 
+  console.log('sdsd')
   if (title) {
     const bookRepo = AppDataSource.getRepository(Book)
     const findBook = await bookRepo.exist({ where: { title: title } })

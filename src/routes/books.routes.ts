@@ -5,9 +5,6 @@ import {
   verifyIsStaff,
   verifyExistBook,
   verifyNotExistBook,
-  verifyIsFollower,
-  verifyIsBlockedLoan,
-  verifyExistLoan,
 } from '../middlewares'
 import { bookController } from '../controllers/book/book.controller'
 import { createBookSchema, updateBookSchema } from '../schemas'
@@ -24,23 +21,6 @@ bookRouter.post(
   verifyIsStaff,
   verifyExistBook,
   bookController.create
-)
-
-bookRouter.post(
-  '/:book_id/follower',
-  validateToken,
-  verifyNotExistBook,
-  verifyIsFollower,
-  bookController.follower
-)
-
-bookRouter.post(
-  '/:book_id/loan',
-  validateToken,
-  verifyNotExistBook,
-  verifyIsBlockedLoan,
-  verifyExistLoan,
-  bookController.loan
 )
 
 bookRouter.patch(

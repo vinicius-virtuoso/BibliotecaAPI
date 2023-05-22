@@ -1,6 +1,7 @@
 import { AppDataSource } from '../../data-source'
 import { User } from '../../entities'
 import { iUpdateUser } from '../../interfaces'
+import { returnUserSchema } from '../../schemas'
 
 export const updateUserService = async (
   user_id: string,
@@ -14,5 +15,5 @@ export const updateUserService = async (
   })
   const savedUpdatedUser = await userRepo.save(updatedUser)
 
-  return savedUpdatedUser
+  return returnUserSchema.parse(savedUpdatedUser)
 }

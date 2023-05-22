@@ -56,5 +56,6 @@ export const retrieveBookService = async (book_id: string) => {
     followers: [...followers],
   }
 
+  console.log('eweq')
   return returnBookOneSchema.parse(formattedBook)
 }

@@ -1,4 +1,3 @@
-// tsconfig.json
 {
   "compilerOptions": {
     "target": "ES2021",
@@ -14,6 +13,6 @@
     "strictPropertyInitialization": false,
     "resolveJsonModule": true
   },
-  "include": ["src", "app.ts"],
+  "include": ["src", "app.ts", "swagger.d.ts"],
   "exclude": ["node_modules"]
 }
