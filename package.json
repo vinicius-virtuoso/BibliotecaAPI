@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "tsnd --cls --rs --transpile-only src/server.ts",
     "typeorm": "typeorm-ts-node-commonjs",
-    "build": "tsc -p tsconfig.json"
+    "build": "tsc"
   },
   "keywords": [
     "biblioteka",
