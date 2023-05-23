@@ -1,7 +1,7 @@
 import { AppDataSource } from '../../data-source'
 import { Book, Follower, User } from '../../entities'
 
-export const createFollowerOfBook = async (
+export const createFollowerOfBookService = async (
   user_id: string,
   book_id: string
 ) => {
@@ -19,7 +19,7 @@ export const createFollowerOfBook = async (
     if (followerSave && followerSave.id) {
       return await followerRepo.findOne({
         where: { id: followerSave.id },
-        relations: { book: true, user: true },
+        relations: { book: true },
       })
     }
   }

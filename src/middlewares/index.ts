@@ -1,3 +1,5 @@
+import { verifyNotExistFollower } from './follower/verifyNotExistFollower.middleware'
+import { verifyNotExistLoan } from './loan/verifyNotExistLoan.middleware'
 import { verifyExistLoan } from './loan/verifyExistLoan.middleware'
 import { verifyIsBlockedLoan } from './loan/verifyIsBlockedLoan.middleware'
 import { verifyIsFollower } from './follower/verifyIsFollower.middleware'
@@ -20,4 +22,6 @@ export {
   verifyOwnerOrStaff,
   verifyIsBlockedLoan,
   verifyExistLoan,
+  verifyNotExistLoan,
+  verifyNotExistFollower,
 }

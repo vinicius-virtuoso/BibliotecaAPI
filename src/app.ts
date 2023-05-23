@@ -7,7 +7,6 @@ import { loginRouter } from './routes/login.routes'
 import { bookRouter } from './routes/books.routes'
 import { loanRouter } from './routes/loans.routes'
 import { registerRouter } from './routes/register.routes'
-
 import { followerRouter } from './routes/followers.routes'
 
 export const app = express()
