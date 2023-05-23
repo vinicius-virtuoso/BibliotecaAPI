@@ -36,3 +36,40 @@ notificado atrávez do e-mail cadastrado. Além de e-mails de cobranças, studan
 <br>
 <br>
 
+## Como rodar localmente:
+
+Requisitos:
+- [x] precisa ter o Node.js(v-18.0+) instalado.
+- [x] precisa ter o PostgreSQL instalado.
+ 
+1.<span style="color: green;">Faça o clone do projeto:</span>
+
+```bash
+  git clone git@github.com:vinicius-virtuoso/BibliotecaAPI.git
+```
+2.<span style="color: green;">Instale as depedencias do projeto:</span>
+
+com yarn:
+```yarn
+  yarn
+```
+com npm:
+```npm
+  npm install
+```
+3.<span style="color: green;">Configure as informações no arquivo .env:</span>
+
+```env
+  PORT='<your port application>'
+
+  SECRET_KEY='<yuor secret key>'
+  EXPIRES_IN='<yuor expires time>'
+
+  DATABASE_URL="postgres://<username>:<password>@localhost:5432/<databasename>"
+
+  SMTP_USER='<your email smtp>'
+  SMTP_PASS='<your password smtp>'
+```
+4.<span style="color: green;">Para testar o envios de e-mails recomendo ver as documentações:</span>
+  - nodemailer
+  - node-cron
