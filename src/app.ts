@@ -9,7 +9,10 @@ import { loanRouter } from './routes/loans.routes'
 import { registerRouter } from './routes/register.routes'
 import { followerRouter } from './routes/followers.routes'
 
+import cors from 'cors'
+
 export const app = express()
+app.use(cors())
 app.use(express.json())
 
 app.use('/login', loginRouter)
