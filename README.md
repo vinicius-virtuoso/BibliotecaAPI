@@ -9,7 +9,16 @@ notificado atrávez do e-mail cadastrado. Além de e-mails de cobranças, studan
 
 <br>
 
-## 🗎 Documentação da api: <a href="https://documenter.getpostman.com/view/27562991/2s93m35PiL">Clique aqui!</a>
+## 🔗 Link da api: 
+  ```json
+    "url": "https://biblioteca-api-kofp.onrender.com"
+  ```
+
+<br>
+
+<br>
+
+## 📑 Documentação da api: <a href="https://documenter.getpostman.com/view/27562991/2s93m35PiL">Clique aqui!</a>
 
 <br>
 
